@@ -24,6 +24,12 @@ class Designs {
     public Designs() {}
 
     public void Menu() {
+
+        String[] currencies = {
+            "USD", "EUR", "GBP", "JPY", "AUD", "CAD", "CHF", "CNY", "INR", "MXN",
+            "BRL", "RUB", "ZAR", "KRW", "SGD", "NZD", "SEK", "NOK", "DKK", "TRY"
+        };
+
         // Mother of all GUI
         JFrame frame = new JFrame();
 
@@ -66,14 +72,9 @@ class Designs {
         JTextField leftDesignInputAmount = new JTextField();
         leftDesignInputAmount.setBounds(15, 220, 120, 40);
 
-       
-
-        
-        String[] currencies = {"USD", "EUR", "GBP", "JPY"};
         JComboBox<String> currencyComboBox = new JComboBox<>(currencies);
         currencyComboBox.setBounds(15, 270, 120, 30);  //COMBO BOX left and right
-        JComboBox<String> currencyComboBox2 = new JComboBox<>(currencies);
-        currencyComboBox2.setBounds(10, 270, 120, 30); 
+        
 
         left.setLayout(null);
 
@@ -116,12 +117,16 @@ class Designs {
 
         JLabel rightDesignAmountNum = new JLabel();
         rightDesignAmountNum.setText(strConvertedCurrency);
-        rightDesignAmountNum.setBounds(70, 225, 200, 30);
-        rightDesignAmountNum.setFont(new Font("Arial", Font.PLAIN, 20));
+        rightDesignAmountNum.setBounds(67, 225, 30, 30); //DEBUG THIS - 0 not showing up
+        rightDesignAmountNum.setFont(new Font("Arial", Font.PLAIN, 30));
 
         JLabel rightDesignAmountText = new JLabel();
         rightDesignAmountText.setText("Amount");
-        rightDesignAmountText.setBounds(50, 220, 120, 40);
+        rightDesignAmountText.setBounds(49, 190, 120, 40);
+        rightDesignAmountText.setFont(new Font("Arial", Font.PLAIN, 15));
+
+        JComboBox<String> currencyComboBox2 = new JComboBox<>(currencies);
+        currencyComboBox2.setBounds(15, 270, 120, 30); 
 
         right.setLayout(null);
         right.add(rightDesignFlag);
@@ -129,6 +134,7 @@ class Designs {
         right.add(rightDesignCountryCode);
         right.add(currencyComboBox2);
         right.add(rightDesignAmountText);
+        right.add(rightDesignAmountNum);
 
         
 
