@@ -34,13 +34,13 @@ class Configurations{
     protected static int CountryFlagXAxisCoords = 25;
     protected static int CountryFlagYAxisCoords = 20;
 
-    protected static int CountryTextXAxisCoords = 85; //Country Text X axis
+    protected static int CountryTextXAxisCoords = 70; //Country Text X axis
     protected static int CountryTextYAxisCoords = 130;
 
-    protected static int CountryCodeXAxisCoords = 80;
+    protected static int CountryCodeXAxisCoords = 65;
     protected static int CountryCodeYAxisCoords = 170;
 
-    protected static int CountryDropdownXAxisCoords = 50;
+    protected static int CountryDropdownXAxisCoords = 40;
     protected static int CountryDropdownYAxisCoords = 270;
 }
 
@@ -89,7 +89,6 @@ class Designs extends Configurations {
         ImageIcon inputCountry = new ImageIcon(flagLeft);
 
         leftDesignFlag.setIcon(inputCountry);
-        leftDesignFlag.setText(countryLeft);
         leftDesignFlag.setBounds(CountryFlagXAxisCoords, CountryFlagYAxisCoords, 150, 100);
 
         JLabel leftDesignCountryName = new JLabel();
@@ -103,7 +102,7 @@ class Designs extends Configurations {
         leftDesignCountryCode.setFont(new Font("Arial", Font.PLAIN, 35));
 
         JTextField leftDesignInputAmount = new JTextField();
-        leftDesignInputAmount.setBounds(50, 220, 120, 40);
+        leftDesignInputAmount.setBounds(40, 215, 120, 40);
 
         JComboBox<String> currencyComboBox = new JComboBox<>(currencies);
         currencyComboBox.setBounds(CountryDropdownXAxisCoords, CountryDropdownYAxisCoords, 120, 30);  //COMBO BOX left and right
@@ -149,12 +148,12 @@ class Designs extends Configurations {
 
         JLabel rightDesignAmountNum = new JLabel();
         rightDesignAmountNum.setText(strConvertedCurrency);
-        rightDesignAmountNum.setBounds(100, 225, 30, 30);
+        rightDesignAmountNum.setBounds(92, 210, 30, 30);
         rightDesignAmountNum.setFont(new Font("Arial", Font.PLAIN, 30));
 
         JLabel rightDesignAmountText = new JLabel();
         rightDesignAmountText.setText("Amount");
-        rightDesignAmountText.setBounds(80, 190, 120, 40);
+        rightDesignAmountText.setBounds(75, 233, 120, 40);
         rightDesignAmountText.setFont(new Font("Arial", Font.PLAIN, 15));
 
         JComboBox<String> currencyComboBox2 = new JComboBox<>(currencies);
