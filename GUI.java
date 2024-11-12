@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 class GUI {
     public static void main(String[] args) {
@@ -15,8 +17,8 @@ class Configurations{
             "BRL", "RUB", "ZAR", "KRW", "SGD", "NZD", "SEK", "NOK", "DKK", "TRY"
         };
 
-    protected static String flagLeft = "emptyCountry.jpg";
-    protected static String flagRight = "emptyCountry.jpg";
+    protected static String flagLeft = "whiteflag.jpg";
+    protected static String flagRight = "whiteflag.jpg";
 
     protected static String countryLeft = "Country";
     protected static String countryRight = "Country";
@@ -29,16 +31,16 @@ class Configurations{
 
     //REPETITIVE GUI COORDS
 
-    protected static int CountryFlagXAxisCoords = 50;
+    protected static int CountryFlagXAxisCoords = 25;
     protected static int CountryFlagYAxisCoords = 20;
 
     protected static int CountryTextXAxisCoords = 85; //Country Text X axis
     protected static int CountryTextYAxisCoords = 130;
 
-    protected static int CountryCodeXAxisCoords = 41;
+    protected static int CountryCodeXAxisCoords = 80;
     protected static int CountryCodeYAxisCoords = 170;
 
-    protected static int CountryDropdownXAxisCoords = 15;
+    protected static int CountryDropdownXAxisCoords = 50;
     protected static int CountryDropdownYAxisCoords = 270;
 }
 
@@ -48,6 +50,16 @@ class Configurations{
 class Designs extends Configurations {
 
     public Designs() {}
+
+    public String getFlagImage(String currencyCode) {
+        switch (currencyCode) {
+            case "USD": return "usa2.jpg";
+            case "EUR": return "EUR.png";
+            case "GBP": return "uk.jpg";
+           // add more in here 
+            default: return "whiteflag.jpg";
+        }
+    }
 
     public void Menu() {
 
@@ -64,7 +76,7 @@ class Designs extends Configurations {
         swap.setBounds(75, 35, 50, 50);
         swap.setIcon(swapLogo);
 
-        submit.setBounds(120, 125, 200, 35); // Submit Button size and coordinates.
+        submit.setBounds(200, 125, 200, 35);
         submit.setText("Submit");
 
         //-----------------------------------------------------------------//
@@ -74,11 +86,11 @@ class Designs extends Configurations {
         left.setBounds(0, 0, 200, 300);
 
         JLabel leftDesignFlag = new JLabel();
-        ImageIcon inputCountry = new ImageIcon(flagLeft); // Left flag design
+        ImageIcon inputCountry = new ImageIcon(flagLeft);
 
         leftDesignFlag.setIcon(inputCountry);
         leftDesignFlag.setText(countryLeft);
-        leftDesignFlag.setBounds(CountryFlagXAxisCoords, CountryFlagYAxisCoords, 100, 100);
+        leftDesignFlag.setBounds(CountryFlagXAxisCoords, CountryFlagYAxisCoords, 150, 100);
 
         JLabel leftDesignCountryName = new JLabel();
         leftDesignCountryName.setText(countryLeft);
@@ -91,19 +103,18 @@ class Designs extends Configurations {
         leftDesignCountryCode.setFont(new Font("Arial", Font.PLAIN, 35));
 
         JTextField leftDesignInputAmount = new JTextField();
-        leftDesignInputAmount.setBounds(15, 220, 120, 40);
+        leftDesignInputAmount.setBounds(50, 220, 120, 40);
 
         JComboBox<String> currencyComboBox = new JComboBox<>(currencies);
         currencyComboBox.setBounds(CountryDropdownXAxisCoords, CountryDropdownYAxisCoords, 120, 30);  //COMBO BOX left and right
         
-
         left.setLayout(null);
 
         left.add(leftDesignFlag);
         left.add(leftDesignCountryName);
         left.add(leftDesignCountryCode);
         left.add(leftDesignInputAmount);
-        left.add(currencyComboBox); 
+        left.add(currencyComboBox);
 
         //------------------------------------------------------------//
 
@@ -121,9 +132,9 @@ class Designs extends Configurations {
         right.setBounds(400, 0, 200, 300);
 
         JLabel rightDesignFlag = new JLabel();
-        ImageIcon outputCountry = new ImageIcon(flagRight); // Right flag design
+        ImageIcon outputCountry = new ImageIcon(flagRight);
 
-        rightDesignFlag.setBounds(CountryFlagXAxisCoords, CountryFlagYAxisCoords, 100, 100);
+        rightDesignFlag.setBounds(CountryFlagXAxisCoords, CountryFlagYAxisCoords, 150, 100);
         rightDesignFlag.setIcon(outputCountry);
 
         JLabel rightCountryDesignName = new JLabel();
@@ -138,16 +149,34 @@ class Designs extends Configurations {
 
         JLabel rightDesignAmountNum = new JLabel();
         rightDesignAmountNum.setText(strConvertedCurrency);
-        rightDesignAmountNum.setBounds(67, 225, 30, 30); //DEBUG THIS - 0 not showing up
+        rightDesignAmountNum.setBounds(100, 225, 30, 30);
         rightDesignAmountNum.setFont(new Font("Arial", Font.PLAIN, 30));
 
         JLabel rightDesignAmountText = new JLabel();
         rightDesignAmountText.setText("Amount");
-        rightDesignAmountText.setBounds(49, 190, 120, 40);
+        rightDesignAmountText.setBounds(80, 190, 120, 40);
         rightDesignAmountText.setFont(new Font("Arial", Font.PLAIN, 15));
 
         JComboBox<String> currencyComboBox2 = new JComboBox<>(currencies);
         currencyComboBox2.setBounds(CountryDropdownXAxisCoords, CountryDropdownYAxisCoords, 120, 30); 
+
+        currencyComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedCurrency = (String) currencyComboBox.getSelectedItem();
+                String flagImage = getFlagImage(selectedCurrency);
+                leftDesignFlag.setIcon(new ImageIcon(flagImage));
+            }
+        });
+
+        currencyComboBox2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedCurrency = (String) currencyComboBox.getSelectedItem();
+                String flagImage = getFlagImage(selectedCurrency);
+                rightDesignFlag.setIcon(new ImageIcon(flagImage));
+            }
+        });
 
         right.setLayout(null);
         right.add(rightDesignFlag);
@@ -165,9 +194,7 @@ class Designs extends Configurations {
         bottom.setBackground(Color.yellow);
         bottom.setBounds(0, 213, 600, 200);
         bottom.setLayout(null);
-        bottom.add(submit); // This button not showing up on JPanel
-
-        //----------------------------------------------------------//
+        bottom.add(submit);
 
         frame.setVisible(true);
         frame.setSize(600,450);
