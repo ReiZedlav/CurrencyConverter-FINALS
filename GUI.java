@@ -2,9 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+public class GUI {
 
-class GUI {
+        ////////////////////////////////////////////////
     public static void main(String[] args) {
+        //ADDED THIS
+
         Designs FrontEnd = new Designs();
         FrontEnd.Menu();
     }
@@ -13,8 +16,10 @@ class GUI {
 class Configurations{
     //config
     protected static String[] currencies = {
-            "USD", "EUR", "GBP", "JPY", "AUD", "CAD", "CHF", "CNY", "INR", "MXN",
-            "BRL", "RUB", "ZAR", "KRW", "SGD", "NZD", "SEK", "NOK", "DKK", "TRY"
+            "USD", "PHP", "CNY", "EUR", "AED", 
+            "KRW", "JPY", "INR", "CAD", "THB", 
+            "MXN", "VND", "CHF", "SGD", "SAR", 
+            "PLN", "RON", "MYR", "RUB", "AUD"
         };
 
     protected static String flagLeft = "whiteflag.jpg";
@@ -44,11 +49,9 @@ class Configurations{
     protected static int CountryDropdownYAxisCoords = 270;
 }
 
-
-
-
 class Designs extends Configurations {
-
+        CurrencyData rates = new CurrencyData(); //Get currency data
+        convert converter = new convert(); //get a converter
     public Designs() {}
 
     public String getFlagImage(String currencyCode) {
@@ -67,8 +70,9 @@ class Designs extends Configurations {
         JFrame frame = new JFrame();
 
         // Button objects
-        JButton swap = new JButton();
-        JButton submit = new JButton();
+        JToggleButton swap = new JToggleButton();
+        JButton submit = new JButton(); 
+ 
 
         ImageIcon swapLogo = new ImageIcon("swap.jpg");
 
@@ -101,11 +105,13 @@ class Designs extends Configurations {
         leftDesignCountryCode.setBounds(CountryCodeXAxisCoords, CountryCodeYAxisCoords, 200, 30);
         leftDesignCountryCode.setFont(new Font("Arial", Font.PLAIN, 35));
 
-        JTextField leftDesignInputAmount = new JTextField();
+        JTextField leftDesignInputAmount = new JTextField(); //use this
         leftDesignInputAmount.setBounds(40, 215, 120, 40);
 
         JComboBox<String> currencyComboBox = new JComboBox<>(currencies);
         currencyComboBox.setBounds(CountryDropdownXAxisCoords, CountryDropdownYAxisCoords, 120, 30);  //COMBO BOX left and right
+
+  
         
         left.setLayout(null);
 
@@ -148,7 +154,7 @@ class Designs extends Configurations {
 
         JLabel rightDesignAmountNum = new JLabel();
         rightDesignAmountNum.setText(strConvertedCurrency);
-        rightDesignAmountNum.setBounds(92, 210, 30, 30);
+        rightDesignAmountNum.setBounds(92, 210, 100, 30);
         rightDesignAmountNum.setFont(new Font("Arial", Font.PLAIN, 30));
 
         JLabel rightDesignAmountText = new JLabel();
@@ -171,7 +177,7 @@ class Designs extends Configurations {
         currencyComboBox2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedCurrency = (String) currencyComboBox.getSelectedItem();
+                String selectedCurrency = (String) currencyComboBox2.getSelectedItem();
                 String flagImage = getFlagImage(selectedCurrency);
                 rightDesignFlag.setIcon(new ImageIcon(flagImage));
             }
@@ -185,7 +191,27 @@ class Designs extends Configurations {
         right.add(rightDesignAmountText);
         right.add(rightDesignAmountNum);
 
-        
+
+        //------------------------------------------------------------//
+
+        swap.addActionListener(new ActionListener(){    
+            // Method when click 
+            public void actionPerformed(ActionEvent e){    
+                // what it do when clicked
+//            	left.setBounds(400, 0, 200, 300);
+//            	right.setBounds(0, 0, 200, 300);
+//            	
+            	if(swap.isSelected()) {
+
+            		left.setBounds(400, 0, 200, 300);
+                	right.setBounds(0, 0, 200, 300);
+                } else {
+
+                	right.setBounds(400, 0, 200, 300);
+                	left.setBounds(0, 0, 200, 300);
+                }
+            }    
+        });    
 
         //------------------------------------------------------------//
 
@@ -204,5 +230,16 @@ class Designs extends Configurations {
         frame.add(middle);
         frame.add(right);
         frame.add(bottom);
+              submit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("dsfsfnsfsd");
+                String amountget = leftDesignInputAmount.getText();
+                double amount = Double.parseDouble(amountget);
+                String source = (String) currencyComboBox.getSelectedItem();
+                String target = (String) currencyComboBox2.getSelectedItem();
+                double convertedAmount = converter.convert(amount, source, target, rates); 
+                rightDesignAmountNum.setText(Double.toString(convertedAmount));
+            }});
     }
 }
