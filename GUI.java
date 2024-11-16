@@ -39,7 +39,7 @@ class Configurations{
     protected static int CountryFlagXAxisCoords = 25;
     protected static int CountryFlagYAxisCoords = 20;
 
-    protected static int CountryTextXAxisCoords = 70; //Country Text X axis
+    protected static int CountryTextXAxisCoords = 50; //Country Text X axis
     protected static int CountryTextYAxisCoords = 130;
 
     protected static int CountryCodeXAxisCoords = 65;
@@ -49,20 +49,45 @@ class Configurations{
     protected static int CountryDropdownYAxisCoords = 270;
 }
 
+
 class Designs extends Configurations {
         CurrencyData rates = new CurrencyData(); //Get currency data
         convert converter = new convert(); //get a converter
+
+        
     public Designs() {}
 
     public String getFlagImage(String currencyCode) {
         switch (currencyCode) {
-            case "USD": return "usa2.jpg";
+            case "USD": return "usa.png";
             case "EUR": return "EUR.png";
-            case "GBP": return "uk.jpg";
+            case "PHP": return "PHP.png";
            // add more in here 
             default: return "whiteflag.jpg";
         }
     }
+
+    public String getCountryName(String currencyCode) {
+        switch (currencyCode) {
+            case "USD": return "United States";
+            case "EUR": return "European Union";
+            case "PHP": return "Philippines";
+            // Add more cases as needed
+            default: return "Unknown Country";
+        }
+    }
+    
+    public String getCountryCode(String currencyCode) {
+        switch (currencyCode) {
+            case "USD": return "USA";
+            case "EUR": return "EU";
+            case "PHP": return "PH";
+            // Add more cases as needed
+            default: return "XXX";
+        }
+    }
+
+    
 
     public void Menu() {
 
@@ -171,15 +196,26 @@ class Designs extends Configurations {
                 String selectedCurrency = (String) currencyComboBox.getSelectedItem();
                 String flagImage = getFlagImage(selectedCurrency);
                 leftDesignFlag.setIcon(new ImageIcon(flagImage));
+        
+                String countryName = getCountryName(selectedCurrency);
+                leftDesignCountryName.setText(countryName);
+        
+                String countryCode = getCountryCode(selectedCurrency);
+                leftDesignCountryCode.setText(countryCode);
             }
         });
-
         currencyComboBox2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedCurrency = (String) currencyComboBox2.getSelectedItem();
                 String flagImage = getFlagImage(selectedCurrency);
                 rightDesignFlag.setIcon(new ImageIcon(flagImage));
+        
+                String countryName = getCountryName(selectedCurrency);
+                rightCountryDesignName.setText(countryName);
+        
+                String countryCode = getCountryCode(selectedCurrency);
+                rightDesignCountryCode.setText(countryCode);
             }
         });
 
