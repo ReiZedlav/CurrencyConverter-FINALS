@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -126,13 +125,37 @@ class Designs extends Configurations {
         
         topIntro.add(topIntroText);
 
+        //-------------------------------------------------------------------// SIDE BAR 
         
-
-        //-------------------------------------------------------------------//
+        JPanel overlayPanel = new JPanel();
+        overlayPanel.setBounds(200,0,400,463);
+        overlayPanel.setBackground(Color.green);
+        overlayPanel.setVisible(false);
 
         JPanel rightHotBar = new JPanel();
         rightHotBar.setBackground(Color.cyan);
-        rightHotBar.setBounds(600,0,36,463);
+        rightHotBar.setBounds(600, 0, 36, 463);
+        rightHotBar.setLayout(null); // Disable layout manager to manually position components
+
+        JButton rightHotBarInvisibleButton = new JButton();
+        rightHotBarInvisibleButton.setBounds(0, 0, rightHotBar.getWidth(), rightHotBar.getHeight()); // Fill entire panel
+
+        rightHotBarInvisibleButton.setBackground(new Color(0, 0, 0, 0)); // Transparent background
+        rightHotBarInvisibleButton.setBorderPainted(false); // Remove the border
+        rightHotBarInvisibleButton.setContentAreaFilled(false); // Make sure it has no content area
+        rightHotBarInvisibleButton.setFocusPainted(false); // Remove focus painting
+
+        rightHotBarInvisibleButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Toggle visibility of the overlay panel
+                overlayPanel.setVisible(!overlayPanel.isVisible());
+            }
+        });
+
+        rightHotBar.add(rightHotBarInvisibleButton);
+
+        frame.add(overlayPanel);
 
         //-----------------------------------------------------------------//
 
