@@ -65,6 +65,27 @@ class Designs extends Configurations {
             case "USD": return "usa.png";
             case "EUR": return "EUR.png";
             case "PHP": return "PHP.png";
+            case "AED": return "AED.png";
+            case "AUD": return "AUD.png";
+            case "CHF": return "CHF.png";
+            case "CNY": return "CNY.png";
+            case "INR" : return "INR.png";
+            case "JPY" : return "JPY.png";
+            case "KRW" : return "KRW.png";
+            case "MXN" : return "MXN.png";
+            case "MYR" : return "MYR.png";
+            case "PLN" : return "PLN.png";
+            case "RON" : return "RON.png";
+            case "RUB" : return "RUB.png";
+            case "SAR" : return "SAR.png";
+            case "SGD" : return "SGD.png";
+            case "VND" : return "VND.png";
+            case "THB" : return "THB.jpg";
+            case "CAD" : return "CND.png";
+           
+
+
+
            // add more in here 
             default: return "whiteflag.jpg";
         }
@@ -75,6 +96,23 @@ class Designs extends Configurations {
             case "USD": return "United States";
             case "EUR": return "European Union";
             case "PHP": return "Philippines";
+            case "AED": return "United Arab Emirates";
+            case "AUD": return "Australia";
+            case "CHF": return "Switzerland";
+            case "CNY": return "China";
+            case "INR": return "India";
+            case "JPY": return "Japan";
+            case "KRW": return "South Korea";
+            case "MXN": return "Mexico";
+            case "MYR": return "Malaysia";
+            case "PLN": return "Poland";
+            case "RON": return "Romania";
+            case "RUB": return "Russia";
+            case "SAR": return "Saudi Arabia";
+            case "SGD": return "Singapore";
+            case "VND": return "Vietnam";
+            case "THB": return "Thailand";
+            case "CAD": return "Canada";
             // Add more cases as needed
             default: return "Unknown Country";
         }
@@ -82,9 +120,26 @@ class Designs extends Configurations {
     
     public String getCountryCode(String currencyCode) {
         switch (currencyCode) {
-            case "USD": return "USA";
-            case "EUR": return "EU";
-            case "PHP": return "PH";
+            case "USD": return "USD";
+            case "EUR": return "EUR";
+            case "PHP": return "PHP";
+            case "AED": return "AED";
+            case "AUD": return "AUD";
+            case "CHF": return "CHF";
+            case "CNY": return "CNY";
+            case "INR" : return "INR";
+            case "JPY" : return "JPY";
+            case "KRW" : return "KRW";
+            case "MXN" : return "MXN";
+            case "MYR" : return "MYR";
+            case "PLN" : return "PLN";
+            case "RON" : return "RON";
+            case "RUB" : return "RUB";
+            case "SAR" : return "SAR";
+            case "SGD" : return "SGD";
+            case "VND" : return "VND";
+            case "THB" : return "THB";
+            case "CAD" : return "CND";
             // Add more cases as needed
             default: return "XXX";
         }
@@ -282,6 +337,9 @@ class Designs extends Configurations {
         
                 String countryCode = getCountryCode(selectedCurrency);
                 leftDesignCountryCode.setText(countryCode);
+                leftDesignInputAmount.setText(""); //resets
+
+                
             }
         });
         currencyComboBox2.addActionListener(new ActionListener() {
@@ -296,6 +354,7 @@ class Designs extends Configurations {
         
                 String countryCode = getCountryCode(selectedCurrency);
                 rightDesignCountryCode.setText(countryCode);
+                rightDesignAmountNum.setText(""); // resets when picking a country
             }
         });
 
@@ -310,24 +369,32 @@ class Designs extends Configurations {
 
         //------------------------------------------------------------//
 
-        swap.addActionListener(new ActionListener(){    
-            // Method when click 
-            public void actionPerformed(ActionEvent e){    
-                // what it do when clicked
-//            	left.setBounds(400, 0, 200, 300);
-//            	right.setBounds(0, 0, 200, 300);
-//            	
-            	if(swap.isSelected()) {
-
-            		left.setBounds(400, 0, 200, 300);
-                	right.setBounds(0, 0, 200, 300);
-                } else {
-
-                	right.setBounds(400, 0, 200, 300);
-                	left.setBounds(0, 0, 200, 300);
-                }
-            }    
-        });    
+        swap.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // storing left and right panel values
+                String tempCurrencyLeft = (String) currencyComboBox.getSelectedItem();
+                String tempCurrencyRight = (String) currencyComboBox2.getSelectedItem();
+                String tempInputAmount = leftDesignInputAmount.getText();
+                String tempConvertedAmount = rightDesignAmountNum.getText();
+        
+                // Swap the values between the left and right panels
+                currencyComboBox.setSelectedItem(tempCurrencyRight);
+                currencyComboBox2.setSelectedItem(tempCurrencyLeft);
+        
+                leftDesignInputAmount.setText(tempConvertedAmount);
+                rightDesignAmountNum.setText(tempInputAmount);
+        
+                // Update the flags, country names, and codes
+                leftDesignFlag.setIcon(new ImageIcon(getFlagImage((String) currencyComboBox.getSelectedItem())));
+                leftDesignCountryName.setText(getCountryName((String) currencyComboBox.getSelectedItem()));
+                leftDesignCountryCode.setText(getCountryCode((String) currencyComboBox.getSelectedItem()));
+        
+                rightDesignFlag.setIcon(new ImageIcon(getFlagImage((String) currencyComboBox2.getSelectedItem())));
+                rightCountryDesignName.setText(getCountryName((String) currencyComboBox2.getSelectedItem()));
+                rightDesignCountryCode.setText(getCountryCode((String) currencyComboBox2.getSelectedItem()));
+            }
+        });  
 
         //------------------------------------------------------------//
 
