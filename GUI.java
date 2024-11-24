@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.HashMap;
@@ -25,8 +27,8 @@ class Configurations{
             "PLN", "RON", "MYR", "RUB", "AUD"
         };
 
-    protected static String flagLeft = "whiteflag.jpg";
-    protected static String flagRight = "whiteflag.jpg";
+    protected static String flagLeft = "img/misc/whiteflag.jpg";
+    protected static String flagRight = "img/misc/whiteflag.jpg";
 
     protected static String countryLeft = "Country";
     protected static String countryRight = "Country";
@@ -62,26 +64,26 @@ class Designs extends Configurations {
 
     public String getFlagImage(String currencyCode) {
         switch (currencyCode) {
-            case "USD": return "usa.png";
-            case "EUR": return "EUR.png";
-            case "PHP": return "PHP.png";
-            case "AED": return "AED.png";
-            case "AUD": return "AUD.png";
-            case "CHF": return "CHF.png";
-            case "CNY": return "CNY.png";
-            case "INR" : return "INR.png";
-            case "JPY" : return "JPY.png";
-            case "KRW" : return "KRW.png";
-            case "MXN" : return "MXN.png";
-            case "MYR" : return "MYR.png";
-            case "PLN" : return "PLN.png";
-            case "RON" : return "RON.png";
-            case "RUB" : return "RUB.png";
-            case "SAR" : return "SAR.png";
-            case "SGD" : return "SGD.png";
-            case "VND" : return "VND.png";
-            case "THB" : return "THB.jpg";
-            case "CAD" : return "CND.png";
+            case "USD": return "img/flag/usa.png";
+            case "EUR": return "img/flag/EUR.png";
+            case "PHP": return "img/flag/PHP.png";
+            case "AED": return "img/flag/AED.png";
+            case "AUD": return "img/flag/AUD.png";
+            case "CHF": return "img/flag/CHF.png";
+            case "CNY": return "img/flag/CNY.png";
+            case "INR" : return "img/flag/INR.png";
+            case "JPY" : return "img/flag/JPY.png";
+            case "KRW" : return "img/flag/KRW.png";
+            case "MXN" : return "img/flag/MXN.png";
+            case "MYR" : return "img/flag/MYR.png";
+            case "PLN" : return "img/flag/PLN.png";
+            case "RON" : return "img/flag/RON.png";
+            case "RUB" : return "img/flag/RUB.png";
+            case "SAR" : return "img/flag/SAR.png";
+            case "SGD" : return "img/flag/SGD.png";
+            case "VND" : return "img/flag/VND.png";
+            case "THB" : return "img/flag/THB.jpg";
+            case "CAD" : return "img/flag/CND.png";
            
 
 
@@ -155,28 +157,38 @@ class Designs extends Configurations {
         // Button objects
         JToggleButton swap = new JToggleButton();
         JButton submit = new JButton(); 
- 
 
-        ImageIcon swapLogo = new ImageIcon("swap.jpg");
+        // Misc designs
+        ImageIcon swapLogo = new ImageIcon("img/misc/swap.png");
+        ImageIcon submitLogo = new ImageIcon("img/misc/subbutton.png");
+        ImageIcon design = new ImageIcon("img/misc/background.png");
+        ImageIcon sidearrow = new ImageIcon("img/misc/sidebarrow.jpg");
 
         // Swap button configurations
-        swap.setBounds(75, 35, 50, 50);
+        swap.setBounds(65, 35, 75, 75);
         swap.setIcon(swapLogo);
+        swap.setBorderPainted(false);
+        swap.setContentAreaFilled(false);
 
+        // The submit button
         submit.setBounds(200, 35, 200, 35);
-        submit.setText("Submit");
+        submit.setIcon(submitLogo);
+        
+        // Border, green squares
+        Color borderColor = new Color(113, 140, 105);
+        Border normalBorder = BorderFactory.createLineBorder(borderColor, 3);
 
         //-------------------------------------------------------------------//
 
         JPanel topIntro = new JPanel();
-        topIntro.setBackground(Color.orange);
+        topIntro.setBackground(new Color(1, 60, 90));
         topIntro.setBounds(0,0,600,63);
 
         JLabel topIntroText = new JLabel();
-
-        topIntroText.setText("CSCC20 FINAL PROJECT");
-
-        topIntroText.setBounds(50, 100,300,50);
+        topIntroText.setFont(new Font("Arial", Font.ITALIC, 40));
+        topIntroText.setForeground(new Color(255, 255, 255));
+        topIntroText.setText("CSCC20 Currency Converter");
+        topIntroText.setBounds(50, 100,320,50);
         
         topIntro.add(topIntroText);
 
@@ -210,19 +222,29 @@ class Designs extends Configurations {
         
         Font labelFont = new Font("Arial", Font.PLAIN, 14);
         currencyInfo.setFont(labelFont);
-        
+        currencyInfo.setForeground(new Color(244, 162, 88));
         
         JPanel overlayPanel = new JPanel();
         overlayPanel.setBounds(200,0,400,463);
-        overlayPanel.setBackground(Color.green);
+        overlayPanel.setBackground(new Color(0, 46, 70));
         overlayPanel.setVisible(false);
 
         overlayPanel.add(currencyInfo);
 
+        //-----------------------------------------------------------------//
+
         JPanel rightHotBar = new JPanel();
-        rightHotBar.setBackground(Color.cyan);
+        rightHotBar.setBackground(new Color(0, 46, 70));
         rightHotBar.setBounds(600, 0, 36, 463);
         rightHotBar.setLayout(null); // Disable layout manager to manually position components
+
+        JLabel sideArrow = new JLabel();
+        sideArrow.setBounds(0, 0, 36, 463);
+        sideArrow.setIcon(sidearrow);
+
+        rightHotBar.add(sideArrow);
+
+        //------------------------------------------------------------//
 
         JButton rightHotBarInvisibleButton = new JButton();
         rightHotBarInvisibleButton.setBounds(0, 0, rightHotBar.getWidth(), rightHotBar.getHeight()); // Fill entire panel
@@ -241,12 +263,11 @@ class Designs extends Configurations {
 
         rightHotBar.add(rightHotBarInvisibleButton);
 
-        frame.add(overlayPanel);
 
         //-----------------------------------------------------------------//
 
         JPanel left = new JPanel();
-        left.setBackground(Color.red);
+        left.setOpaque(false);
         left.setBounds(0, 63, 200, 300);
 
         JLabel leftDesignFlag = new JLabel();
@@ -257,21 +278,25 @@ class Designs extends Configurations {
 
         JLabel leftDesignCountryName = new JLabel();
         leftDesignCountryName.setText(countryLeft);
-        leftDesignCountryName.setBounds(CountryTextXAxisCoords, CountryTextYAxisCoords, 200, 30);
-        leftDesignCountryName.setFont(new Font("Arial", Font.PLAIN, 18));
+        leftDesignCountryName.setBounds(13, CountryTextYAxisCoords, 175, 30);
+        leftDesignCountryName.setHorizontalAlignment(SwingConstants.CENTER);
+        leftDesignCountryName.setBorder(normalBorder);
+        leftDesignCountryName.setFont(new Font("Arial", Font.ITALIC, 16));
 
         JLabel leftDesignCountryCode = new JLabel();
         leftDesignCountryCode.setText(countryCodeLeft);
-        leftDesignCountryCode.setBounds(CountryCodeXAxisCoords, CountryCodeYAxisCoords, 200, 30);
-        leftDesignCountryCode.setFont(new Font("Arial", Font.PLAIN, 35));
+        leftDesignCountryCode.setBounds(50, CountryCodeYAxisCoords, 100, 40);
+        leftDesignCountryCode.setHorizontalAlignment(SwingConstants.CENTER);
+        leftDesignCountryCode.setBorder(normalBorder);
+        leftDesignCountryCode.setFont(new Font("Arial", Font.BOLD, 35));
 
         JTextField leftDesignInputAmount = new JTextField(); //use this
         leftDesignInputAmount.setBounds(40, 215, 120, 40);
+        leftDesignInputAmount.setFont(new Font("Arial", Font.PLAIN, 18));
 
         JComboBox<String> currencyComboBox = new JComboBox<>(currencies);
         currencyComboBox.setBounds(CountryDropdownXAxisCoords, CountryDropdownYAxisCoords, 120, 30);  //COMBO BOX left and right
 
-  
         
         left.setLayout(null);
 
@@ -284,7 +309,7 @@ class Designs extends Configurations {
         //------------------------------------------------------------//
 
         JPanel middle = new JPanel();
-        middle.setBackground(Color.green);
+        middle.setOpaque(false);
         middle.setBounds(200, 63, 200, 300);
         middle.setLayout(null);
 
@@ -293,7 +318,7 @@ class Designs extends Configurations {
         //-----------------------------------------------------------//
 
         JPanel right = new JPanel();
-        right.setBackground(Color.blue);
+        right.setOpaque(false);
         right.setBounds(400, 63, 200, 300);
 
         JLabel rightDesignFlag = new JLabel();
@@ -304,17 +329,22 @@ class Designs extends Configurations {
 
         JLabel rightCountryDesignName = new JLabel();
         rightCountryDesignName.setText(countryRight);
-        rightCountryDesignName.setBounds(CountryTextXAxisCoords, CountryTextYAxisCoords, 200, 30);
-        rightCountryDesignName.setFont(new Font("Arial", Font.PLAIN, 18));
+        rightCountryDesignName.setBounds(13, CountryTextYAxisCoords, 175, 30);
+        rightCountryDesignName.setHorizontalAlignment(SwingConstants.CENTER);
+        rightCountryDesignName.setBorder(normalBorder);
+        rightCountryDesignName.setFont(new Font("Arial", Font.ITALIC, 18));
 
         JLabel rightDesignCountryCode = new JLabel();
         rightDesignCountryCode.setText(countryCodeLeft);
-        rightDesignCountryCode.setBounds(CountryCodeXAxisCoords, CountryCodeYAxisCoords, 200, 30);
-        rightDesignCountryCode.setFont(new Font("Arial", Font.PLAIN, 35));
+        rightDesignCountryCode.setBounds(50, CountryCodeYAxisCoords, 100, 40);
+        rightDesignCountryCode.setHorizontalAlignment(SwingConstants.CENTER);
+        rightDesignCountryCode.setBorder(normalBorder);
+        rightDesignCountryCode.setFont(new Font("Arial", Font.BOLD, 35));
 
         JLabel rightDesignAmountNum = new JLabel();
         rightDesignAmountNum.setText(strConvertedCurrency);
-        rightDesignAmountNum.setBounds(92, 210, 100, 30);
+        rightDesignAmountNum.setBounds(0, 215, 200, 30);
+        rightDesignAmountNum.setHorizontalAlignment(SwingConstants.CENTER);
         rightDesignAmountNum.setFont(new Font("Arial", Font.PLAIN, 30));
 
         JLabel rightDesignAmountText = new JLabel();
@@ -399,23 +429,41 @@ class Designs extends Configurations {
         //------------------------------------------------------------//
 
         JPanel bottom = new JPanel();
-        bottom.setBackground(Color.yellow);
+        bottom.setOpaque(false);
         bottom.setBounds(0, 363, 600, 100);
         bottom.setLayout(null);
         bottom.add(submit);
+
+        //------------------------------------------------------------//
+
+        JPanel Fancybackground = new JPanel();
+        Fancybackground.setBackground(Color.MAGENTA);
+        Fancybackground.setBounds(0, 0, 600, 465);
+        Fancybackground.setLayout(null);
+
+        JLabel maindesign = new JLabel();
+        maindesign.setBounds(0, 0, 600, 465);
+        maindesign.setIcon(design);
+
+        Fancybackground.add(maindesign);
+
+        //------------------------------------------------------------//
 
         frame.setVisible(true);
         frame.setSize(650,500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
-
+        
+        frame.add(overlayPanel);
         frame.add(topIntro);
         frame.add(rightHotBar);
-
+        
         frame.add(left);
         frame.add(middle);
         frame.add(right);
         frame.add(bottom);
+        frame.add(Fancybackground);
+        
               submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
