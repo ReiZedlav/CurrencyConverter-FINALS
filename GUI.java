@@ -58,7 +58,32 @@ class Configurations{
 class Designs extends Configurations {
         CurrencyData rates = new CurrencyData(); //Get currency data
         convert converter = new convert(); //get a converter
-
+        public String getsymbol(String currencyCode){
+            switch (currencyCode){
+                case "USD": return "$";
+                case "EUR": return "€";
+                case "PHP": return "₱";
+                case "AED": return "د.إ";
+                case "AUD": return "$";
+                case "CHF": return "CHF";
+                case "CNY": return "¥";
+                case "INR": return "₹";
+                case "JPY": return "¥";
+                case "KRW": return "₩";
+                case "MXN": return "$";
+                case "MYR": return "RM";
+                case "PLN": return "zł";
+                case "RON": return "lei";
+                case "RUB": return "₽";
+                case "SAR": return "﷼.";
+                case "SGD": return "$";
+                case "VND": return "₫";
+                case "THB": return "฿";
+                case "CAD": return "$";
+                default: return "";
+            }
+            
+        }
         
     public Designs() {}
 
@@ -196,27 +221,28 @@ class Designs extends Configurations {
 
         //IM NOT A DESIGNER UHUHUHU
         StringBuilder currencyData = new StringBuilder();
-        
-        currencyData.append("USD - United States Dollar - US - Exchange Rate: 1.0\n");
-        currencyData.append("PHP - Philippine Peso - PH - Exchange Rate: 56.64\n");
-        currencyData.append("CNY - Chinese Yuan - CN - Exchange Rate: 7.02\n");
-        currencyData.append("EUR - European Euro - EU - Exchange Rate: 0.91\n");
-        currencyData.append("AED - United Arab Emirates Dirham - AE - Exchange Rate: 3.67\n");
-        currencyData.append("KRW - South Korean Won - KR - Exchange Rate: 1346.87\n");
-        currencyData.append("JPY - Japanese Yen - JP - Exchange Rate: 148.72\n");
-        currencyData.append("INR - Indian Rupee - IN - Exchange Rate: 84.03\n");
-        currencyData.append("CAD - Canadian Dollar - CA - Exchange Rate: 1.36\n");
-        currencyData.append("THB - Thai Baht - TH - Exchange Rate: 33.28\n");
-        currencyData.append("MXN - Mexican Peso - MX - Exchange Rate: 20.14\n");
-        currencyData.append("VND - Vietnamese Dong - VN - Exchange Rate: 25289.85\n");
-        currencyData.append("CHF - Swiss Franc - CH - Exchange Rate: 0.88\n");
-        currencyData.append("SGD - Singaporean Dollar - SG - Exchange Rate: 1.33\n");
-        currencyData.append("SAR - Saudi Riyal - SA - Exchange Rate: 3.76\n");
-        currencyData.append("PLN - Polish złoty - PL - Exchange Rate: 4.05\n");
-        currencyData.append("RON - Romanian Leu - RO - Exchange Rate: 4.65\n");
-        currencyData.append("MYR - Malaysian Ringgit - MY - Exchange Rate: 4.41\n");
-        currencyData.append("RUB - Russian Ruble - RU - Exchange Rate: 98.00\n");
-        currencyData.append("AUD - Australian Dollar - AU - Exchange Rate: 1.52\n");
+
+        currencyData.append(" US DOLLAR EXCHANGE RATES:\n");
+        currencyData.append(" USD - United States Dollar - US - Exchange Rate: 1.0\n");
+        currencyData.append(" PHP - Philippine Peso - PH - Exchange Rate: 56.64\n");
+        currencyData.append(" CNY - Chinese Yuan - CN - Exchange Rate: 7.02\n");
+        currencyData.append(" EUR - European Euro - EU - Exchange Rate: 0.91\n");
+        currencyData.append(" AED - United Arab Emirates Dirham - AE - Exchange Rate: 3.67\n");
+        currencyData.append(" KRW - South Korean Won - KR - Exchange Rate: 1346.87\n");
+        currencyData.append(" JPY - Japanese Yen - JP - Exchange Rate: 148.72\n");
+        currencyData.append(" INR - Indian Rupee - IN - Exchange Rate: 84.03\n");
+        currencyData.append(" CAD - Canadian Dollar - CA - Exchange Rate: 1.36\n");
+        currencyData.append(" THB - Thai Baht - TH - Exchange Rate: 33.28\n");
+        currencyData.append(" MXN - Mexican Peso - MX - Exchange Rate: 20.14\n");
+        currencyData.append(" VND - Vietnamese Dong - VN - Exchange Rate: 25289.85\n");
+        currencyData.append(" CHF - Swiss Franc - CH - Exchange Rate: 0.88\n");
+        currencyData.append(" SGD - Singaporean Dollar - SG - Exchange Rate: 1.33\n");
+        currencyData.append(" SAR - Saudi Riyal - SA - Exchange Rate: 3.76\n");
+        currencyData.append(" PLN - Polish złoty - PL - Exchange Rate: 4.05\n");
+        currencyData.append(" RON - Romanian Leu - RO - Exchange Rate: 4.65\n");
+        currencyData.append(" MYR - Malaysian Ringgit - MY - Exchange Rate: 4.41\n");
+        currencyData.append(" RUB - Russian Ruble - RU - Exchange Rate: 98.00\n");
+        currencyData.append(" AUD - Australian Dollar - AU - Exchange Rate: 1.52\n");
 
         JLabel currencyInfo = new JLabel("<html>" + currencyData.toString().replace("\n", "<br>") + "</html>");
         
@@ -473,7 +499,8 @@ class Designs extends Configurations {
                 String source = (String) currencyComboBox.getSelectedItem();
                 String target = (String) currencyComboBox2.getSelectedItem();
                 double convertedAmount = converter.convert(amount, source, target, rates); 
-                rightDesignAmountNum.setText(Double.toString(convertedAmount));
+                String formattedAmount = getsymbol(target) + String.format("%.2f", convertedAmount);
+                rightDesignAmountNum.setText(formattedAmount);
             }});
     }
 }
