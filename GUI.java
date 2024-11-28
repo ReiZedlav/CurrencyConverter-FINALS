@@ -222,28 +222,40 @@ class Designs extends Configurations {
         //IM NOT A DESIGNER UHUHUHU
         StringBuilder currencyData = new StringBuilder();
         
-        currencyData.append("USD - United States Dollar - US - Exchange Rate: 1.0\n");
-        currencyData.append("PHP - Philippine Peso - PH - Exchange Rate: 56.64\n");
-        currencyData.append("CNY - Chinese Yuan - CN - Exchange Rate: 7.02\n");
-        currencyData.append("EUR - European Euro - EU - Exchange Rate: 0.91\n");
-        currencyData.append("AED - United Arab Emirates Dirham - AE - Exchange Rate: 3.67\n");
-        currencyData.append("KRW - South Korean Won - KR - Exchange Rate: 1346.87\n");
-        currencyData.append("JPY - Japanese Yen - JP - Exchange Rate: 148.72\n");
-        currencyData.append("INR - Indian Rupee - IN - Exchange Rate: 84.03\n");
-        currencyData.append("CAD - Canadian Dollar - CA - Exchange Rate: 1.36\n");
-        currencyData.append("THB - Thai Baht - TH - Exchange Rate: 33.28\n");
-        currencyData.append("MXN - Mexican Peso - MX - Exchange Rate: 20.14\n");
-        currencyData.append("VND - Vietnamese Dong - VN - Exchange Rate: 25289.85\n");
-        currencyData.append("CHF - Swiss Franc - CH - Exchange Rate: 0.88\n");
-        currencyData.append("SGD - Singaporean Dollar - SG - Exchange Rate: 1.33\n");
-        currencyData.append("SAR - Saudi Riyal - SA - Exchange Rate: 3.76\n");
-        currencyData.append("PLN - Polish złoty - PL - Exchange Rate: 4.05\n");
-        currencyData.append("RON - Romanian Leu - RO - Exchange Rate: 4.65\n");
-        currencyData.append("MYR - Malaysian Ringgit - MY - Exchange Rate: 4.41\n");
-        currencyData.append("RUB - Russian Ruble - RU - Exchange Rate: 98.00\n");
-        currencyData.append("AUD - Australian Dollar - AU - Exchange Rate: 1.52\n");
+        currencyData.append("<html><table border='1' cellpadding='2' cellspacing='0' style='border-collapse: collapse;'>");
 
-        JLabel currencyInfo = new JLabel("<html>" + currencyData.toString().replace("\n", "<br>") + "</html>");
+        // Table header row with Currency Code, Country Name, and Exchange Rate
+        currencyData.append("<tr><th>Currency Code</th><th>Country Name</th><th>Exchange Rate</th></tr>");
+
+        // Append each currency data as a new row, including the country name
+        currencyData.append("<tr><td>USD</td><td>United States</td><td>1.0</td></tr>");
+        currencyData.append("<tr><td>PHP</td><td>Philippines</td><td>56.64</td></tr>");
+        currencyData.append("<tr><td>CNY</td><td>China</td><td>7.02</td></tr>");
+        currencyData.append("<tr><td>EUR</td><td>European Union</td><td>0.91</td></tr>");
+        currencyData.append("<tr><td>AED</td><td>United Arab Emirates</td><td>3.67</td></tr>");
+        currencyData.append("<tr><td>KRW</td><td>South Korea</td><td>1346.87</td></tr>");
+        currencyData.append("<tr><td>JPY</td><td>Japan</td><td>148.72</td></tr>");
+        currencyData.append("<tr><td>INR</td><td>India</td><td>84.03</td></tr>");
+        currencyData.append("<tr><td>CAD</td><td>Canada</td><td>1.36</td></tr>");
+        currencyData.append("<tr><td>THB</td><td>Thailand</td><td>33.28</td></tr>");
+        currencyData.append("<tr><td>MXN</td><td>Mexico</td><td>20.14</td></tr>");
+        currencyData.append("<tr><td>VND</td><td>Vietnam</td><td>25289.85</td></tr>");
+        currencyData.append("<tr><td>CHF</td><td>Switzerland</td><td>0.88</td></tr>");
+        currencyData.append("<tr><td>SGD</td><td>Singapore</td><td>1.33</td></tr>");
+        currencyData.append("<tr><td>SAR</td><td>Saudi Arabia</td><td>3.76</td></tr>");
+        currencyData.append("<tr><td>PLN</td><td>Poland</td><td>4.05</td></tr>");
+        currencyData.append("<tr><td>RON</td><td>Romania</td><td>4.65</td></tr>");
+        currencyData.append("<tr><td>MYR</td><td>Malaysia</td><td>4.41</td></tr>");
+        currencyData.append("<tr><td>RUB</td><td>Russia</td><td>98.00</td></tr>");
+        currencyData.append("<tr><td>AUD</td><td>Australia</td><td>1.52</td></tr>");
+
+        // Close the HTML table structure
+        currencyData.append("</table></html>");
+
+
+
+        // Create the JLabel with the formatted HTML table
+        JLabel currencyInfo = new JLabel(currencyData.toString());
         
         Font labelFont = new Font("Arial", Font.PLAIN, 14);
         currencyInfo.setFont(labelFont);
