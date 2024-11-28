@@ -504,8 +504,7 @@ class Designs extends Configurations {
         
                 
                 String amountget = leftDesignInputAmount.getText();
-                String cleanedAmount = amountget.replaceAll("[^0-9.]", "");  // Clean the symbols aaaaaaaaaaaaaaaaaaaaaaaaaaaaa 
-                // Ensure the cleaned amount is a valid number
+                String cleanedAmount = amountget.replaceAll("[^0-9.]", "");  // to remove the symbols
                 double amount = Double.parseDouble(cleanedAmount); 
         
                 // Get the selected source and target currencies
