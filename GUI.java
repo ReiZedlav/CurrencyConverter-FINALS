@@ -576,6 +576,7 @@ class Designs extends Configurations {
         frame.setSize(650,500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
+        frame.setResizable(false);
         
         frame.add(overlayPanel);
         frame.add(topIntro);
