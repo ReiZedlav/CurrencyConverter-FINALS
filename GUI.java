@@ -1,10 +1,12 @@
 import javax.swing.*;
 import javax.swing.border.Border;
-
+import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.File;
+import java.io.IOException;
 
 
 public class GUI {
@@ -14,6 +16,7 @@ public class GUI {
         //ADDED THIS
 //hi
         Designs FrontEnd = new Designs();
+        FrontEnd.playMusic("07. Shop Channel.wav");
         FrontEnd.Menu();
     }
 }
@@ -63,9 +66,9 @@ class Designs extends Configurations {
                 case "USD": return "$";
                 case "EUR": return "€";
                 case "PHP": return "₱";
-                case "AED": return "د.إ";
+                case "AED": return "AED ";
                 case "AUD": return "$";
-                case "CHF": return "CHF";
+                case "CHF": return "CHF ";
                 case "CNY": return "¥";
                 case "INR": return "₹";
                 case "JPY": return "¥";
@@ -75,7 +78,7 @@ class Designs extends Configurations {
                 case "PLN": return "zł";
                 case "RON": return "lei";
                 case "RUB": return "₽";
-                case "SAR": return "﷼.";
+                case "SAR": return "﷼";
                 case "SGD": return "$";
                 case "VND": return "₫";
                 case "THB": return "฿";
@@ -172,6 +175,80 @@ class Designs extends Configurations {
         }
     }
 
+    private Clip clip;
+
+    
+    public void playMusic(String filePath) {
+        try {
+           
+            File musicFile = new File(filePath);
+            if (!musicFile.exists()) {
+                System.out.println("Music file not found!");
+                return;
+            }
+
+            
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(musicFile);
+            clip = AudioSystem.getClip();
+            clip.open(audioStream);
+
+            
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            clip.start();
+        } catch (UnsupportedAudioFileException e) {
+            System.out.println("Unsupported audio format!");
+        } catch (LineUnavailableException e) {
+            System.out.println("Audio line unavailable!");
+        } catch (IOException e) {
+            System.out.println("Error reading the audio file!");
+        }
+    }
+
+    // Method to stop the music
+    public void stopMusic() {
+        if (clip != null && clip.isRunning()) {
+            clip.stop();
+            clip.close();
+        }
+    }
+
+    public static void playsoundswap(String filePath) {
+        try {
+            File soundFile = new File(filePath);
+            if (!soundFile.exists()) {
+                System.out.println("Sound file not found: " + filePath);
+                return;
+            }
+
+            
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start(); 
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.out.println("Error playing sound: " + e.getMessage());
+        }
+    }
+
+    public static void playsoundsubmit(String filePath) {
+        try {
+            File soundFile = new File(filePath);
+            if (!soundFile.exists()) {
+                System.out.println("Sound file not found: " + filePath);
+                return;
+            }
+
+            
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start(); 
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.out.println("Error playing sound: " + e.getMessage());
+        }
+    }
+
+
     
 
     public void Menu() {
@@ -225,7 +302,7 @@ class Designs extends Configurations {
         currencyData.append("<html><table border='1' cellpadding='2' cellspacing='0' style='border-collapse: collapse;'>");
 
         // Table header row with Currency Code, Country Name, and Exchange Rate
-        currencyData.append("<tr><th>Currency Code</th><th>Country Name</th><th>Exchange Rate</th></tr>");
+        currencyData.append("<tr><th>Currency Code</th><th>Country Name</th><th>Dollar Rate</th></tr>");
 
         // Append each currency data as a new row, including the country name
         currencyData.append("<tr><td>USD</td><td>United States</td><td>1.0</td></tr>");
@@ -440,6 +517,7 @@ class Designs extends Configurations {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Storing the left and right panel values
+                playsoundswap("ka-ching.wav");
                 String tempCurrencyLeft = (String) currencyComboBox.getSelectedItem();
                 String tempCurrencyRight = (String) currencyComboBox2.getSelectedItem();
                 
@@ -512,25 +590,41 @@ class Designs extends Configurations {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("dsfsfnsfsd");
-        
-                
-                String amountget = leftDesignInputAmount.getText();
-                String cleanedAmount = amountget.replaceAll("[^0-9.]", "");  // to remove the symbols
-                double amount = Double.parseDouble(cleanedAmount); 
-        
-                // Get the selected source and target currencies
-                String source = (String) currencyComboBox.getSelectedItem();
-                String target = (String) currencyComboBox2.getSelectedItem();
-        
-                // Perform the conversion using the cleaned amount and the selected currencies
-                double convertedAmount = converter.convert(amount, source, target, rates);
-        
-                // Format the result (add the symbol for the target currency) and display the converted amount
-                String formattedAmount = getsymbol(target) + String.format("%.2f", convertedAmount);
-                rightDesignAmountNum.setText(formattedAmount);  // Set the result in the right panel
+                try {
+                    System.out.println("dsfsfnsfsd");
+                    playsoundswap("ka-ching.wav");
+                    
+                    // Get the input amount and clean it
+                    String amountget = leftDesignInputAmount.getText().trim(); 
+                    if (amountget.isEmpty()) {
+                        throw new IllegalArgumentException("Input amount cannot be empty.");
+                    }
+                    
+                    String cleanedAmount = amountget.replaceAll("[^0-9.]", ""); // Remove non-numeric symbols
+                    
+               
+                    double amount = Double.parseDouble(cleanedAmount); 
+                    
+                    // Get the selected source and target currencies
+                    String source = (String) currencyComboBox.getSelectedItem();
+                    String target = (String) currencyComboBox2.getSelectedItem();
+                    
+                    // Perform the conversion using the cleaned amount and the selected currencies
+                    double convertedAmount = converter.convert(amount, source, target, rates);
+                    
+                    // Format the result (add the symbol for the target currency) and display the converted amount
+                    String formattedAmount = getsymbol(target) + String.format("%.2f", convertedAmount);
+                    rightDesignAmountNum.setText(formattedAmount); // Set the result in the right panel
+                } catch (NumberFormatException ex) {
+                    // Handle invalid numeric input
+                    JOptionPane.showMessageDialog(null, "Please enter a valid numeric value for the amount.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                } catch (IllegalArgumentException ex) {
+                    // Handle empty input or custom exceptions
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
+                } 
             }
         });
+        
         
     }
 }
