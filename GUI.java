@@ -221,28 +221,27 @@ class Designs extends Configurations {
 
         //IM NOT A DESIGNER UHUHUHU
         StringBuilder currencyData = new StringBuilder();
-
-        currencyData.append(" US DOLLAR EXCHANGE RATES:\n");
-        currencyData.append(" USD - United States Dollar - US - Exchange Rate: 1.0\n");
-        currencyData.append(" PHP - Philippine Peso - PH - Exchange Rate: 56.64\n");
-        currencyData.append(" CNY - Chinese Yuan - CN - Exchange Rate: 7.02\n");
-        currencyData.append(" EUR - European Euro - EU - Exchange Rate: 0.91\n");
-        currencyData.append(" AED - United Arab Emirates Dirham - AE - Exchange Rate: 3.67\n");
-        currencyData.append(" KRW - South Korean Won - KR - Exchange Rate: 1346.87\n");
-        currencyData.append(" JPY - Japanese Yen - JP - Exchange Rate: 148.72\n");
-        currencyData.append(" INR - Indian Rupee - IN - Exchange Rate: 84.03\n");
-        currencyData.append(" CAD - Canadian Dollar - CA - Exchange Rate: 1.36\n");
-        currencyData.append(" THB - Thai Baht - TH - Exchange Rate: 33.28\n");
-        currencyData.append(" MXN - Mexican Peso - MX - Exchange Rate: 20.14\n");
-        currencyData.append(" VND - Vietnamese Dong - VN - Exchange Rate: 25289.85\n");
-        currencyData.append(" CHF - Swiss Franc - CH - Exchange Rate: 0.88\n");
-        currencyData.append(" SGD - Singaporean Dollar - SG - Exchange Rate: 1.33\n");
-        currencyData.append(" SAR - Saudi Riyal - SA - Exchange Rate: 3.76\n");
-        currencyData.append(" PLN - Polish złoty - PL - Exchange Rate: 4.05\n");
-        currencyData.append(" RON - Romanian Leu - RO - Exchange Rate: 4.65\n");
-        currencyData.append(" MYR - Malaysian Ringgit - MY - Exchange Rate: 4.41\n");
-        currencyData.append(" RUB - Russian Ruble - RU - Exchange Rate: 98.00\n");
-        currencyData.append(" AUD - Australian Dollar - AU - Exchange Rate: 1.52\n");
+        
+        currencyData.append("USD - United States Dollar - US - Exchange Rate: 1.0\n");
+        currencyData.append("PHP - Philippine Peso - PH - Exchange Rate: 56.64\n");
+        currencyData.append("CNY - Chinese Yuan - CN - Exchange Rate: 7.02\n");
+        currencyData.append("EUR - European Euro - EU - Exchange Rate: 0.91\n");
+        currencyData.append("AED - United Arab Emirates Dirham - AE - Exchange Rate: 3.67\n");
+        currencyData.append("KRW - South Korean Won - KR - Exchange Rate: 1346.87\n");
+        currencyData.append("JPY - Japanese Yen - JP - Exchange Rate: 148.72\n");
+        currencyData.append("INR - Indian Rupee - IN - Exchange Rate: 84.03\n");
+        currencyData.append("CAD - Canadian Dollar - CA - Exchange Rate: 1.36\n");
+        currencyData.append("THB - Thai Baht - TH - Exchange Rate: 33.28\n");
+        currencyData.append("MXN - Mexican Peso - MX - Exchange Rate: 20.14\n");
+        currencyData.append("VND - Vietnamese Dong - VN - Exchange Rate: 25289.85\n");
+        currencyData.append("CHF - Swiss Franc - CH - Exchange Rate: 0.88\n");
+        currencyData.append("SGD - Singaporean Dollar - SG - Exchange Rate: 1.33\n");
+        currencyData.append("SAR - Saudi Riyal - SA - Exchange Rate: 3.76\n");
+        currencyData.append("PLN - Polish złoty - PL - Exchange Rate: 4.05\n");
+        currencyData.append("RON - Romanian Leu - RO - Exchange Rate: 4.65\n");
+        currencyData.append("MYR - Malaysian Ringgit - MY - Exchange Rate: 4.41\n");
+        currencyData.append("RUB - Russian Ruble - RU - Exchange Rate: 98.00\n");
+        currencyData.append("AUD - Australian Dollar - AU - Exchange Rate: 1.52\n");
 
         JLabel currencyInfo = new JLabel("<html>" + currencyData.toString().replace("\n", "<br>") + "</html>");
         
@@ -428,29 +427,37 @@ class Designs extends Configurations {
         swap.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // storing left and right panel values
+                // Storing the left and right panel values
                 String tempCurrencyLeft = (String) currencyComboBox.getSelectedItem();
                 String tempCurrencyRight = (String) currencyComboBox2.getSelectedItem();
+                
+                // Get the amount from the left and right panels
                 String tempInputAmount = leftDesignInputAmount.getText();
                 String tempConvertedAmount = rightDesignAmountNum.getText();
         
-                // Swap the values between the left and right panels
+                // Clean the amounts by removing symbols to avoid bad recalc
+                String cleanedInputAmount = tempInputAmount.replaceAll("[^0-9.]", "");  
+                String cleanedConvertedAmount = tempConvertedAmount.replaceAll("[^0-9.]", ""); 
+        
+                // Swap the values between the left and right panels (numeric values only)
                 currencyComboBox.setSelectedItem(tempCurrencyRight);
                 currencyComboBox2.setSelectedItem(tempCurrencyLeft);
-        
-                leftDesignInputAmount.setText(tempConvertedAmount);
-                rightDesignAmountNum.setText(tempInputAmount);
-        
+                
+                // Set the cleaned values to the left and right design inputs (without currency symbols)
+                leftDesignInputAmount.setText(cleanedConvertedAmount);  // Use the converted amount (cleaned)
+                rightDesignAmountNum.setText(cleanedInputAmount);       // Use the original input (cleaned)
+                
                 // Update the flags, country names, and codes
                 leftDesignFlag.setIcon(new ImageIcon(getFlagImage((String) currencyComboBox.getSelectedItem())));
                 leftDesignCountryName.setText(getCountryName((String) currencyComboBox.getSelectedItem()));
                 leftDesignCountryCode.setText(getCountryCode((String) currencyComboBox.getSelectedItem()));
-        
+                
                 rightDesignFlag.setIcon(new ImageIcon(getFlagImage((String) currencyComboBox2.getSelectedItem())));
                 rightCountryDesignName.setText(getCountryName((String) currencyComboBox2.getSelectedItem()));
                 rightDesignCountryCode.setText(getCountryCode((String) currencyComboBox2.getSelectedItem()));
             }
-        });  
+        });
+        
 
         //------------------------------------------------------------//
 
@@ -490,18 +497,30 @@ class Designs extends Configurations {
         frame.add(bottom);
         frame.add(Fancybackground);
         
-              submit.addActionListener(new ActionListener() {
+        submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("dsfsfnsfsd");
+        
+                
                 String amountget = leftDesignInputAmount.getText();
-                double amount = Double.parseDouble(amountget);
+                String cleanedAmount = amountget.replaceAll("[^0-9.]", "");  // Clean the symbols aaaaaaaaaaaaaaaaaaaaaaaaaaaaa 
+                // Ensure the cleaned amount is a valid number
+                double amount = Double.parseDouble(cleanedAmount); 
+        
+                // Get the selected source and target currencies
                 String source = (String) currencyComboBox.getSelectedItem();
                 String target = (String) currencyComboBox2.getSelectedItem();
-                double convertedAmount = converter.convert(amount, source, target, rates); 
+        
+                // Perform the conversion using the cleaned amount and the selected currencies
+                double convertedAmount = converter.convert(amount, source, target, rates);
+        
+                // Format the result (add the symbol for the target currency) and display the converted amount
                 String formattedAmount = getsymbol(target) + String.format("%.2f", convertedAmount);
-                rightDesignAmountNum.setText(formattedAmount);
-            }});
+                rightDesignAmountNum.setText(formattedAmount);  // Set the result in the right panel
+            }
+        });
+        
     }
 }
 
@@ -580,4 +599,6 @@ class convert extends converter { //initialized subclass
         return (amount / sourceRate) * targetRate;  //converting formula
     }
 }  
+
+
 
